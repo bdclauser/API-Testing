@@ -13,7 +13,10 @@ url = BASE_URI+"/init"
 payload = {}
 headers = {}
 
+
 response = requests.request("POST", url, headers=headers, data=payload)
+response_text = response.json()
+pretty_print(response_text)
 
 print(response.text)
 
