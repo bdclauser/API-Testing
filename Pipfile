@@ -17,6 +17,7 @@ requests = "==2.28.1"
 tomli = "==2.0.1"
 urllib3 = "==1.26.13"
 assertpy = "*"
+pytest = "*"
 
 [dev-packages]
 
