@@ -24,10 +24,13 @@ responseObject = requests.post(
 )
 
 jsonData = responseObject.json()
-
-jsonStringData = dumps(jsonData)
-Authorization = jsonData['AUTH']
-print(Authorization)
-#print(jsonStringData)
+print(jsonData)
 print()
-print(type(jsonStringData))
+jsonStringData = dumps(jsonData)
+
+
+Authorization = jsonData['AUTH']
+csrf_token = jsonData['CSRF']
+print(Authorization)
+print()
+print(csrf_token)
