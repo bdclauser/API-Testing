@@ -1,14 +1,15 @@
 import requests
+#import pytest
+#import responses
 import json
 from http import HTTPStatus
-
-# trying different approach
-import pytest
-import responses
-
 from json import dumps
 from json import dump
+from config import my_password
 
+
+
+print(my_password)
 
 ## POST init
 # @responses.activate
@@ -37,16 +38,28 @@ print(csrf_token)
 
 
 def login():
-    
 
-    payload = {"login_email": "brian.clauser@mhc.org", "login_password": "", "token": csrf_token }
-    url = 'https:mhcdev.com/mobile/api/login'
+    payload = {
+        "login_email": "brian.clauser@mhc.org",
+        "login_password": "",
+        "token": csrf_token,
+    }
+    url = "https:mhcdev.com/mobile/api/login"
 
-    x = requests.post(url, data = payload, headers={'Content-Type': 'text/html; charset=UTF-8', 'Connection': 'keep-alive', 'Referrer-Policy': 'strict-origin', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAVEORIGIN'}, cookies=jar)
+    x = requests.post(
+        url,
+        data=payload,
+        headers={
+            "Content-Type": "text/html; charset=UTF-8",
+            "Connection": "keep-alive",
+            "Referrer-Policy": "strict-origin",
+            "X-Content-Type-Options": "nosniff",
+            "X-Frame-Options": "SAVEORIGIN",
+        },
+        cookies=jar,
+    )
 
     print(x.text)
 
     jar = requests.cookies.RequestsCookieJar()
-    jar.set('tasty_cookie', 'yum', domain='mhcdev.com', path='/cookies')
-
-    
+    jar.set("tasty_cookie", "yum", domain="mhcdev.com", path="/cookies")
