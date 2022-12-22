@@ -1,65 +1,69 @@
+"""needed imports"""
 import requests
-#import pytest
-#import responses
-import json
-from http import HTTPStatus
-from json import dumps
-from json import dump
 from config import my_password
 
+# import json
+# from http import HTTPStatus
+# from json import dumps
+# from json import dump
 
 
-print(my_password)
-
-## POST init
-# @responses.activate
-def init():
-    """Queries the endpoint and returns an Authorization Key and a CSRF token"""
-
-
-payload = {"key1": "value1", "key2": "value2", "key3": "value3"}
+"""This gets the authorization token and the csrf token"""
+payload = {}
 headers = {}
-
-responseObject = requests.post(
-    "https://mhcdev.com/mobile/api/init", headers=headers, data=payload
+response_object = requests.request(
+    "POST",
+    "https://mhcdev.com/mobile/api/init",
+    headers=headers,
+    data=payload,
+    timeout=5.001,
 )
 
-jsonData = responseObject.json()
+for c in response_object.cookies:
+    print(c.name + "==>>", c.value)
+global sessionID
+sessionID = (c.name) + "=" + (c.value)
+print(sessionID)
+print("00000000000000000000000000000000000000000000000000000000")
+jsonData = response_object.json()
 print(jsonData)
-print()
-jsonStringData = dumps(jsonData)
+print("|================================================================|")
+global authorization
+authorization = jsonData.get("AUTH")
+global csrf_token
+csrf_token = jsonData.get("CSRF")
+print("Authorization:" + authorization)
+print("||==============================================================||")
+print("CSRF:" + csrf_token)
+print("||==============================================================||")
 
 
-Authorization = jsonData["AUTH"]
-csrf_token = jsonData["CSRF"]
-print(Authorization)
-print()
-print(csrf_token)
+# def login():
+#     payload = {
+#         "login_email": "brian.clauser@mhc.org",
+#         "login_password": my_password,
+#         "token": csrf_token,
+#     }
+
+#     x = requests.request(
+#         "POST",
+#         "https:mhcdev.com/mobile/api/login",
+#         data=payload,
+#         headers={"Cookie": sessionID, "Authorization": authorization},
+#     )
+
+#     print(x.text)
 
 
-def login():
+# def g2fa():
+#     code = input("Enter your 6-digit code: ")
+#     code = int(code)
 
-    payload = {
-        "login_email": "brian.clauser@mhc.org",
-        "login_password": "",
-        "token": csrf_token,
-    }
-    url = "https:mhcdev.com/mobile/api/login"
-
-    x = requests.post(
-        url,
-        data=payload,
-        headers={
-            "Content-Type": "text/html; charset=UTF-8",
-            "Connection": "keep-alive",
-            "Referrer-Policy": "strict-origin",
-            "X-Content-Type-Options": "nosniff",
-            "X-Frame-Options": "SAVEORIGIN",
-        },
-        cookies=jar,
-    )
-
-    print(x.text)
-
-    jar = requests.cookies.RequestsCookieJar()
-    jar.set("tasty_cookie", "yum", domain="mhcdev.com", path="/cookies")
+#     url = "https://mhcdev.com/mobile/api/login-g2fa"
+#     payload = {"code": code}
+#     files = []
+#     headers = {"Authorization": authorization, "Cookie": sessionID}
+#     g2faResponse = requests.request(
+#         "POST", url, headers=headers, data=payload, files=files
+#     )
+#     print(g2faResponse.text)

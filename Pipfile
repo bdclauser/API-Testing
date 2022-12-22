@@ -19,7 +19,7 @@ assertpy = "*"
 pytest = "*"
 requests = "*"
 responses = "*"
-config = "*"
+pylint = "*"
 
 [dev-packages]
 
