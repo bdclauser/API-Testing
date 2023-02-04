@@ -1,7 +1,4 @@
-import sys
-import os
-sys.path.append(os.path.join('tests'))
-import local_config
+
 import requests
 from local_config import MY_PASSWORD
 
