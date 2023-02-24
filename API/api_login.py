@@ -40,7 +40,7 @@ def login(session, SESSIONID, AUTHORIZATION, csrf_token):
 def g2fa(session, SESSIONID, AUTHORIZATION, csrf_token):
     """login requires g2fa, going to need a manual entry to variable"""
     url = "https://mhcdev.com/mobile/api/login-g2fa"
-    payload = {'code': '209231'}
+    payload = {"code": "209231"}
     files = []
     headers = {
         "Cookie": SESSIONID,
